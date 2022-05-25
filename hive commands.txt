@@ -1,0 +1,14 @@
+hduser1@dsa01-HP-280-G2-MT:~$ start-dfs.sh
+hduser1@dsa01-HP-280-G2-MT:~$ start-yarn.sh
+hduser1@dsa01-HP-280-G2-MT:~$ jps
+hduser1@dsa01-HP-280-G2-MT:~$ cd /usr/local/hive/bin
+hduser1@dsa01-HP-280-G2-MT:/usr/local/hive/bin$ ./hive
+hive> show databases;
+hive> create table flights(id int, source string, dest string, price int) row format delimited fields terminated by ',' stored as textfile;
+hive> load data local inpath '/home/dsa01/Desktop/flight.txt' into table flights;
+hive> select * from flights;
+hive> create table pilots(id int, pilot string, duration int) row format delimited fields terminated by ',' stored as textfile;
+hive> load data local inpath '/home/dsa01/Desktop/flight2.txt' into table pilots;
+hive> select * from pilots;
+hive> select source, dest, pilot, price from flights join pilots on flights.id = pilots.id;
+hive> select avg(price) from flights;

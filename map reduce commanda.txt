@@ -1,0 +1,59 @@
+su - hduser
+(password: pccoe)
+(download all files and make a csv file from the given access text file)
+(make a new folder called analyzelogs in hduser)
+sudo mkdir analyzelogs 
+ls 
+sudo chmod -R 777 analyzelogs/ 
+cd 
+ls 
+cd .. 
+pwd 
+ls 
+cd 
+pwd 
+#sudo chown -R hduser analyzelogs/
+cd 
+ls 
+cd analyzelogs/ 
+ls 
+cd ..
+(copy all downloaded files into analyzelogs)
+sudo cp /home/mde/Desktop/count_logged_users/* ~/analyzelogs/ 
+(start hadoop press enter key for passkey and put "pccoe" as password)
+start-dfs.sh 
+start-yarn.sh 
+jps 
+cd 
+cd analyzelogs 
+ls 
+pwd 
+ls 
+ls -ltr 
+ls -al 
+sudo chmod +r *.* 
+pwd
+(import SalesCountry package for compiling our java files)
+export CLASSPATH="$HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-core-2.7.2.jar:$HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-common-2.7.2.jar:$HADOOP_HOME/share/hadoop/common/hadoop-common-2.7.2.jar: ~/analyzelogs/SalesCountry/*:$HADOOP_HOME/lib/*"
+(now compile our java files)
+javac -d . SalesMapper.java SalesCountryReducer.java SalesCountryDriver.java 
+ls 
+cd SalesCountry/ 
+ls 
+cd .. 
+sudo gedit Manifest.txt 
+jar -cfm analyzelogs.jar Manifest.txt SalesCountry/*.class 
+ls 
+cd 
+jps 
+cd analyzelogs/
+
+sudo mkdir ~/input2000
+sudo cp access_log_short.csv ~/input2000/ 
+$HADOOP_HOME/bin/hdfs dfs -put ~/input2000 / 
+$HADOOP_HOME/bin/hadoop jar analyzelogs.jar /input2000 /output2000 
+
+$HADOOP_HOME/bin/hdfs dfs -cat /output2000/part-00000 
+  
+stop-all.sh 
+jps 
